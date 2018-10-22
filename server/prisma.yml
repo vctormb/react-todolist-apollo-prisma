@@ -1,0 +1,12 @@
+endpoint: https://us1.prisma.sh/developer-3c4888/todo-list/dev
+datamodel: datamodel.prisma
+
+generate:
+  - generator: javascript-client
+    output: ./generated/prisma
+  - generator: graphql-schema
+    output: ./generated/prisma
+
+hooks:
+  post-deploy:
+    - prisma generate
