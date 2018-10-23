@@ -1,4 +1,4 @@
-# import User, Post from "./generated/prisma/prisma.graphql"
+# import User, Post from "./prisma/generated/prisma/prisma.graphql"
 
 type Query {
   publishedPosts: [Post!]!

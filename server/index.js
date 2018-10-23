@@ -1,59 +1,13 @@
 const { GraphQLServer } = require('graphql-yoga');
-const { prisma } = require('./generated/prisma');
+const { prisma } = require('./prisma/generated/prisma');
+
+const { Query, Mutation, User, Post } = require('./resolvers');
 
 const resolvers = {
-  Query: {
-    publishedPosts(root, args, context) {
-      return context.prisma.posts({ where: { published: true } });
-    },
-    post(root, args, context) {
-      return context.prisma.post({ id: args.postId });
-    },
-    postsByUser(root, args, context) {
-      return context.prisma
-        .user({
-          id: args.userId,
-        })
-        .posts();
-    },
-  },
-  Mutation: {
-    createDraft(root, args, context) {
-      return context.prisma.createPost({
-        title: args.title,
-        author: {
-          connect: { id: args.userId },
-        },
-      });
-    },
-    publish(root, args, context) {
-      return context.prisma.updatePost({
-        where: { id: args.postId },
-        data: { published: true },
-      });
-    },
-    createUser(root, args, context) {
-      return context.prisma.createUser({ name: args.name, email: args.email });
-    },
-  },
-  User: {
-    posts(root, args, context) {
-      return context.prisma
-        .user({
-          id: root.id,
-        })
-        .posts();
-    },
-  },
-  Post: {
-    author(root, args, context) {
-      return context.prisma
-        .post({
-          id: root.id,
-        })
-        .author();
-    },
-  },
+  Query,
+  Mutation,
+  User,
+  Post,
 };
 
 const server = new GraphQLServer({
@@ -63,5 +17,5 @@ const server = new GraphQLServer({
     prisma,
   },
 });
-//
+
 server.start(() => console.log('Server is running on http://localhost:4000'));
