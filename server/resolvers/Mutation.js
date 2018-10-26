@@ -1,28 +1,20 @@
-const createDraft = async (root, args, context) => {
-  return await context.prisma.createPost({
-    title: args.title,
-    author: {
-      connect: { id: args.userId },
-    },
-  });
-};
-
-const publish = async (root, args, context) => {
-  return await context.prisma.updatePost({
-    where: { id: args.postId },
-    data: { published: true },
-  });
-};
+// USER
 
 const createUser = async (root, args, context) => {
   return await context.prisma.createUser({
-    name: args.name,
-    email: args.email,
+    ...args,
+  });
+};
+
+// TODO
+const createTodo = async (root, { userId, ...rest }, context) => {
+  return await context.prisma.createTodo({
+    ...rest,
+    author: { connect: { id: userId } },
   });
 };
 
 module.exports = {
-  createDraft,
-  publish,
   createUser,
+  createTodo,
 };

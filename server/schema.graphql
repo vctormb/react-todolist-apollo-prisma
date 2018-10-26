@@ -1,13 +1,18 @@
-# import User, Post from "./prisma/generated/prisma/prisma.graphql"
+# import User, Todo, TodoCreateInput from "./prisma/generated/prisma/prisma.graphql"
 
 type Query {
-  publishedPosts: [Post!]!
-  post(postId: ID!): Post
-  postsByUser(userId: ID!): [Post!]!
+  users: [User!]!
+  todoes: [Todo!]!
 }
 
 type Mutation {
-  createUser(name: String!, email: String!): User
-  createDraft(title: String!, userId: ID!): Post
-  publish(postId: ID!): Post
+  createUser(name: String!, email: String!, password: String!): User!
+  createTodo(description: String!, isDone: Boolean, userId: String!): Todo!
+}
+
+# overwrites
+type User {
+  id: ID!
+  name: String!
+  email: String!
 }

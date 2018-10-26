@@ -1,6 +1,6 @@
 const author = async (root, args, context) => {
   return await context.prisma
-    .post({
+    .todo({
       id: root.id,
     })
     .author();

@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
   "dependencies": {
     "graphql": "0.13",
     "graphql-yoga": "^1.16.7",
+    "nodemon": "^1.18.4",
     "prisma-client-lib": "^0.2.59"
   }
 }
