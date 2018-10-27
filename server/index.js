@@ -1,14 +1,19 @@
-const { GraphQLServer } = require('graphql-yoga');
+const { ApolloServer } = require('apollo-server');
+const { importSchema } = require('graphql-import');
 const { prisma } = require('./prisma/generated/prisma');
 
+const typeDefs = importSchema('./schema.graphql');
 const resolvers = require('./resolvers');
 
-const server = new GraphQLServer({
-  typeDefs: './schema.graphql',
+const server = new ApolloServer({
+  typeDefs,
   resolvers,
-  context: {
+  context: ({ req }) => ({
+    request: req,
     prisma,
-  },
+  }),
 });
 
-server.start(() => console.log('Server is running on http://localhost:4000'));
+server.listen().then(({ url }) => {
+  console.log(`🚀  Server ready at ${url}`);
+});
