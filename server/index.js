@@ -12,6 +12,7 @@ const server = new ApolloServer({
     request: req,
     prisma,
   }),
+  cors: true,
 });
 
 server.listen().then(({ url }) => {

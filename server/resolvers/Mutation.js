@@ -18,11 +18,11 @@ const signup = async (root, args, context) => {
 };
 
 const login = async (root, { email, password }, context) => {
-  const user = context.prisma.user({ email });
+  const user = await context.prisma.user({ email });
 
   if (!user) throw new Error('Invalid email or password');
 
-  const isValidPassword = bcrypt.compare(password, user.password);
+  const isValidPassword = await bcrypt.compare(password, user.password);
 
   if (!isValidPassword) throw new Error('Invalid email or password');
 
