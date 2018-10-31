@@ -7,6 +7,7 @@ import { TODOES_QUERY } from '../../graphql';
 
 // screens
 import TodoItem from './TodoItem';
+import TodoInput from './TodoInput';
 
 const Ul = styled.ul`
   list-style: none;
@@ -24,13 +25,16 @@ class Todo extends React.Component {
           if (error) return <p>error!</p>;
 
           return (
-            <Ul>
-              {data.todoes.map((val, i) => (
-                <TodoItem key={i} item={val}>
-                  {val.description}
-                </TodoItem>
-              ))}
-            </Ul>
+            <React.Fragment>
+              <TodoInput />
+              <Ul>
+                {data.todoes.map((val, i) => (
+                  <TodoItem key={i} item={val}>
+                    {val.description}
+                  </TodoItem>
+                ))}
+              </Ul>
+            </React.Fragment>
           );
         }}
       </Query>

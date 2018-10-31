@@ -9,7 +9,7 @@ type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
   createUser(name: String!, email: String!, password: String!): User!
-  createTodo(description: String!, isDone: Boolean, userId: String!): Todo!
+  createTodo(description: String!, isDone: Boolean): Todo!
   updateTodo(description: String!, isDone: Boolean, todoId: String!): Todo!
   deleteManyTodoes(todoIds: [String!]): DeleteTodoPayload!
   markTodoAsDone(todoId: String!, isDone: Boolean!): Todo!

@@ -1,6 +1,9 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+// utils
+const { getUserId } = require('../utils');
+
 // AUTH
 
 const signup = async (root, args, context) => {
@@ -35,20 +38,26 @@ const login = async (root, { email, password }, context) => {
 // USER
 
 const createUser = async (root, args, context) => {
+  const userId = getUserId(context);
+
   return await context.prisma.createUser({
     ...args,
   });
 };
 
 // TODO
-const createTodo = async (root, { userId, ...rest }, context) => {
+const createTodo = async (root, args, context) => {
+  const userId = getUserId(context);
+
   return await context.prisma.createTodo({
-    ...rest,
+    ...args,
     author: { connect: { id: userId } },
   });
 };
 
 const updateTodo = async (root, { todoId, ...rest }, context) => {
+  const userId = getUserId(context);
+
   const todo = await context.prisma.todo({ id: todoId });
 
   if (!todo) throw new Error('Not found');
@@ -60,12 +69,16 @@ const updateTodo = async (root, { todoId, ...rest }, context) => {
 };
 
 const deleteManyTodoes = async (root, { todoIds }, context) => {
+  const userId = getUserId(context);
+
   return await context.prisma.deleteManyTodoes({
     id_in: todoIds,
   });
 };
 
 const markTodoAsDone = async (root, { todoId, isDone }, context) => {
+  const userId = getUserId(context);
+
   const todo = await context.prisma.todo({ id: todoId });
 
   if (!todo) throw new Error('Not found');
