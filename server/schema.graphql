@@ -12,6 +12,7 @@ type Mutation {
   createTodo(description: String!, isDone: Boolean, userId: String!): Todo!
   updateTodo(description: String!, isDone: Boolean, todoId: String!): Todo!
   deleteManyTodoes(todoIds: [String!]): DeleteTodoPayload!
+  markTodoAsDone(todoId: String!, isDone: Boolean!): Todo!
 }
 
 # overwrites

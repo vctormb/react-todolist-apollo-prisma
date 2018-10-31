@@ -2,6 +2,8 @@
 const { getUserId } = require('../utils');
 
 const users = async (root, args, context) => {
+  const userId = getUserId(context);
+
   return await context.prisma.users();
 };
 

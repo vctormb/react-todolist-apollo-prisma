@@ -65,6 +65,19 @@ const deleteManyTodoes = async (root, { todoIds }, context) => {
   });
 };
 
+const markTodoAsDone = async (root, { todoId, isDone }, context) => {
+  const todo = await context.prisma.todo({ id: todoId });
+
+  if (!todo) throw new Error('Not found');
+
+  return await context.prisma.updateTodo({
+    data: {
+      isDone,
+    },
+    where: { id: todoId },
+  });
+};
+
 module.exports = {
   signup,
   login,
@@ -72,4 +85,5 @@ module.exports = {
   createTodo,
   updateTodo,
   deleteManyTodoes,
+  markTodoAsDone,
 };
